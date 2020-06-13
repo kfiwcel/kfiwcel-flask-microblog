@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+    <div xmlns:margin="http://www.w3.org/1999/xhtml">
+    <iframe class='calendar'align="right" src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;
+    ctz=Asia%2FShanghai&amp;src=a2Zpd2NlbDk3MDMxM0BnbWFpbC5jb20&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;
+    src=emguaG9uZ19rb25nI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;color=%23039BE5&amp;color=%2333B679&amp;color=%230B8043&amp;
+    title=kfiwcel&amp;showPrint=0&amp;showTabs=1&amp;showCalendars=1&amp;showTz=0&amp;showDate=1&amp;showTitle=0&amp;showNav=1" style="border-width:0"
+            width="500" height="210" frameborder="0" scrolling="no"></iframe>
+
+    </div>
+    <!--头像-->
+    {% if current_user.avatar1 %}
+        <!--自定义头像-->
+        <td><a href="" class="avatar"><img class="img-rounded" src="{{ current_user.avatar1 }}" align="left" width="128"></a></td>
+    {% else %}
+        <!--系统头像-->
+
+    {% endif %}
+
+    <h1 align="center">Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1></p>
+
+
+
+    <div align="center">
+
+        {% if current_user.can(Permission.WRITE_ARTICLES) %}
+
+            <h3><a href="{{ url_for('main.release_post') }}">Post your post</a></h3>
+
+
+        {% endif %}
+    </div>
+    <br><br><br><br>
+    <div class="post-tabs">
+        <ul class="nav nav-tabs">
+            <li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_all') }}">All</a></li>
+            {% if current_user.is_authenticated %}
+                <li{% if show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_followed') }}">Followers</a></li>
+            {% endif %}
+        </ul>
+
+
+        {% include '_posts.html' %}
+    </div>
+    {% if pagination %}
+        <div class="pagination">
+            {{ macros.pagination_widget(pagination, '.index') }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ pagedown.include_pagedown() }}
+{% endblock %}
