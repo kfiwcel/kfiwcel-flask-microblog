@@ -24,5 +24,5 @@ html5lib==1.0b3
 itsdangerous==0.24
 python-editor==1.0.3
 six==1.4.1
-gunicorn==18.0
-psycopg2==2.5.1
+gunicorn
+psycopg2
