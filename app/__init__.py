@@ -44,8 +44,7 @@ def create_app(config_name):
 
     wtf_tinymce.init_app ( app )
 
-
-
+   
 
 
     from .main import main as main_blueprint
